@@ -1,0 +1,14 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "expreee-demo",
+  "main": "index.js",
+  "author": "zl",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.2.2",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.0"
+  }
+}

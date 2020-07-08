@@ -1,0 +1,323 @@
+version: '3.3'
+services:
+  #  app-login-bff:
+  #    image: 'harbor-dev.r2ai.com.cn/next-test/app-login-bff:latest'
+  #    restart: always
+  #    ports:
+  #      - '4001:4001'
+
+
+#  etl-service:
+#    image: 'harbor-dev.r2ai.com.cn/next-test/etl-service'
+#    restart: always
+#    depends_on:
+#      - es
+#    ports:
+#      - '4005:4005'
+#    environment:
+#      - CACHE_TTL=5
+#      - PORT=4005
+#      - ES_URI=http://es:9200/
+#      - APP_LOGIN_BFF=app-login-bff:4001
+#      - AUTH_SERVICE=auth-service:4002
+#      - DEPLOYMENT_SERVICE=deployment-service:4003
+#      - DSL_SERVICE=dsl-service:4004
+#      - ETL_SERVICE=etl-service:4005
+#      - GRAPHIC_SERVICE=graphic-service:4006
+#      - JOB_SERVICE=job-service:4007
+#      - MODEL_SERVICE=model-service:4008
+#      - PLAN_SERVICE=plan-service:4009
+#      - PROJECT_SERVICE=project-service:4010
+#      - PROPELLER_BFF=propeller-bff:4011
+#      - SAAS_BFF=saas-bff:4012
+#      - SAAS_LOGIN_BFF=saas-login-bff:4013
+#      - SCHEDULE_SERVICE=schedule-service:4014
+#      - SCHEMA_SERVICE=schema-service:4015
+#      - TASK_SERVICE=task-service:4016
+#      - USER_SERVICE=user-service:4017
+#      - EEE_SERVICE=eee-service:4018
+
+#  graphic-service:
+#    image: 'harbor-dev.r2ai.com.cn/next-test/graphic-service:latest'
+#    restart: always
+#    ports:
+#      - '4006:4006'
+#    environment:
+#      - CACHE_TTL=5
+#      - PORT=4006
+#      - ES_URI=http://192.168.0.142:9200
+
+
+  #  saas-bff:
+  #    image: 'harbor-dev.r2ai.com.cn/next-test/saa-bff:latest'
+  #    restart: always
+  #    ports:
+  #      - '4012:4012'
+  #  saas-login-bff:
+  #    image: 'harbor-dev.r2ai.com.cn/next-test/saas-login-bff:latest'
+  #    restart: always
+  #    ports:
+  #      - '4013:4013'
+  #  schedule-service:
+  #    image: 'harbor-dev.r2ai.com.cn/next-test/schedule-service:latest'
+  #    restart: always
+  #    ports:
+  #      - '4014:4014'
+  #  schema-service:
+  #    image: 'harbor-dev.r2ai.com.cn/next-test/schema-service:latest'
+  #    restart: always
+  #    depends_on:
+  #      - mydb
+  #    ports:
+  #      - '4015:4015'
+  #    env_file:
+  #      - ./packages/schema-service/.env.example
+  #    environment:
+  #      - DATABASE_HOST=mydb
+  #  task-service:
+  #    image: 'harbor-dev.r2ai.com.cn/next-test/task-service:latest'
+  #    restart: always
+  #    depends_on:
+  #      - mydb
+  #    ports:
+  #      - '4016:4016'
+  #    env_file:
+  #      - ./packages/task-service/.env.example
+  #    environment:
+  #      - DATABASE_HOST=mydb
+#    user-service:
+#      image: 'harbor-dev.r2ai.com.cn/next-test/user-service:latest'
+#      restart: always
+#      depends_on:
+#        - mydb
+#      ports:
+#        - '4017:4017'
+#      env_file:
+#        - ./packages/user-service/.env.example
+#      environment:
+#        - DATABASE_HOST=mydb
+#  back-api:
+#    image: harbor-dev.r2ai.com.cn/back/r2learn-api:latest
+#    environment:
+#      - MONGO_HOST=mongo
+#      - REDIS_HOST=redis:6379
+#      - ES_HOST=es:9200
+#      - TASK_QUEUE_HOST=admin:admin@rabbitmq
+#    command: python run.py -p 80
+#    depends_on:
+#      - rabbitmq
+#      - redis
+#      - mongo
+#    ports:
+#      - 8081:80
+#
+#  back-service:
+#    image: harbor-dev.r2ai.com.cn/back/r2learn:latest
+#    environment:
+#      - MONGO_HOST=mongo
+#      - REDIS_HOST=redis:6379
+#      - ES_HOST=es:9200
+#      - TASK_QUEUE_HOST=admin:admin@rabbitmq
+#      - WEB_API_HOST=192.168.0.142:8081
+##      - DOCKER_BUILD_HOST=docker-in-docker:8000
+#      - DOCKER_BUILD_HOST=192.168.0.142:18000
+#    command: python run.py --queue=*
+#    depends_on:
+#      - rabbitmq
+#      - redis
+#      - mongo
+
+#  docker-in-docker:
+#    image: harbor-dev.r2ai.com.cn/back/docker-model-build
+#    restart: always
+#    privileged: true
+#    environment:
+#      - MONGO_HOST=192.168.0.142:27017
+#      - NEXT-DEPLOY2=192.168.0.142:8080
+#      - WEB_API_HOST=192.168.0.142:8081
+#    command: /root/start.sh
+#    depends_on:
+#      - back-api
+#      - mongo
+#    ports:
+#      - 18000:8000
+
+#  redis:
+#    image: 'redis:4.0.12-alpine'
+#    restart: always
+#    command: redis-server --appendonly yes
+#    ports:
+#      - '6379:6379'
+#    volumes:
+#      - './data:/data'
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admins
+      POSTGRES_USER: admins
+      POSTGRES_DB: users
+#    volumes:
+#      - db-data:/var/lib/pg/data
+    ports:
+        - 5444:5432
+
+#  rabbitmq:
+#    image: rabbitmq:management
+#    restart: always
+#    environment:
+#      RABBITMQ_DEFAULT_USER: admin
+#      RABBITMQ_DEFAULT_PASS: admin
+#    volumes:
+#      - mq-data1:/var/lib/rabbitmq
+#    ports:
+#      - 15672:15672
+#      - 5672:5672
+#      - 25672:25672
+#      - 61613:61613
+#      - 1883:1883
+#  es:
+#    image: elasticsearch:7.4.0
+#    restart: always
+#    environment:
+#      discovery.type: single-node
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+
+
+#  strapi:
+#    image: harbor-dev.r2ai.com.cn/next-test/strapi-service:latest
+#    restart: always
+#    environment:
+#      - DATABASE_HOST=mongo
+#      - DATABASE_PORT=27017
+#      - DATABASE_USERNAME=
+#      - DATABASE_PASSWORD=
+#      - SERVER=localhost
+#      - PORT=1337
+#      - PLANS=[{"level":0,"name":"Unavailable","userProjectRestriction":"0","userConcurrentRestriction":"0","userDeployRestriction":"0","userModelingRestriction":"0","userStorageRestriction":"0","zh_name":"不可用"},{"level":3,"name":"Essential","userConcurrentRestriction":"5","userDeployRestriction":"20000","userProjectRestriction":"150","userModelingRestriction":"209715200","userStorageRestriction":"107374182400","zh_name":"专业版"},{"level":2,"name":"Basic","userConcurrentRestriction":"1","userDeployRestriction":"20000","userModelingRestriction":"52428800","userProjectRestriction":"15","userStorageRestriction":"10737418240","zh_name":"基础版"},{"level":4,"name":"Enterprise","userConcurrentRestriction":"Infinity","userDeployRestriction":"Infinity","userModelingRestriction":"Infinity","userProjectRestriction":"Infinity","userStorageRestriction":"Infinity","zh_name":"企业版"},{"level":1,"name":"FreeTrial","userConcurrentRestriction":"1","userDeployRestriction":"20000","userModelingRestriction":"52428800","userProjectRestriction":"15","userStorageRestriction":"10737418240","zh_name":"免费试用"}]
+#      - DPUSER={"email":"admin@r2.ai","update_password":"123456"}
+#    ports:
+#      - 2337:1337
+#    depends_on:
+#      - mongo
+
+#  strapi:
+#    image: harbor-dev.r2ai.com.cn/next-test/strapi-service-zh:latest
+#    restart: always
+#    environment:
+#      - SERVER=localhost:3002
+#      - PORT=80
+#      - POSTGRES_HOST=192.168.0.142
+#      - POSTGRES_DB=test
+#      - POSTGRES_USER=root
+#      - POSTGRES_PWD=root
+#      - MESSAGE_HOST=192.168.0.160:8089
+#      - PORTAL_URL=
+#    ports:
+#      - 82:80
+#    depends_on:
+#      - mydb
+
+
+#  minio:
+#    image: minio/minio:latest
+#    volumes:
+#      - minio-data:/data/minio
+#    ports:
+#      - "9000:9000"
+#    environment:
+#      MINIO_ACCESS_KEY: minio
+#      MINIO_SECRET_KEY: minio123
+##      MINIO_REGION: cn-north-1
+#    command: server /data/minio/
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+#      interval: 30s
+#      timeout: 20s
+#      retries: 3
+#  tusd:
+#    image: tusproject/tusd:latest
+#    restart: always
+#    command: ["-s3-bucket","ddd","-s3-endpoint","http://minio:9000"]
+#    environment:
+#      - AWS_ACCESS_KEY_ID=minio
+#      - AWS_SECRET_ACCESS_KEY=minio123
+#      - AWS_REGION=cn-north-1
+#    ports:
+#      - 1080:1080
+#    depends_on:
+#      - minio
+
+#  message-service:
+#    image: harbor-dev.r2ai.com.cn/r2-test/message-service:latest
+#    ports:
+#      - '8089:8080'
+#    environment:
+#      - PORTAL_URL=http://localhost:3002
+#      - STRAPI_SERVICE=http://localhost:1337
+#      - REDIS_HOST=redis
+#      - REDIS_PORT=6379
+#      - REDIS_PASSWORD=redis123321eq
+#      - MAIL_TAIL=@test.r2ai-vip.com
+#      - SES_CONFIGURATION_SET=test-configuration
+#      - ACCESS_KEY_ID=AKIAQX2U7VVFP5LJ6V4S
+#      - SECRET_ACESS_KEY=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
+#      - REGION=us-east-1
+
+
+#  pay-bff:
+#    image: harbor-dev.r2ai.com.cn/r2-test/pay-bff:latest
+#    ports:
+#      - '8091:8080'
+#    environment:
+#      - CLOUD_PAY_SERVICE=http://192.168.0.142:8090
+#      - CONFIRM_CHARGE_URL=http://my.test.local:8084/paySuccess
+#      - MESSAGE_SERVICE=http://my.test.local:8089
+#      - PAY_WEBHOOKS=http://my.test.local:8091
+#      - PATH_SSL=/usr/bin/openssl
+#      - REDIS_HOST=192.168.0.142
+#      - REDIS_PORT=6379
+#      - REDIS_DB=10
+#      - REDIS_PASSWORD=redis123321eq
+#    command:
+#      - /bin/sh
+#      - -c
+#      - cd /cloudPay;yarn start-test;
+#
+#  pay-service:
+#    image: harbor-dev.r2ai.com.cn/r2-test/pay-service:latest
+#    ports:
+#      - '8090:8080'
+#    environment:
+#      - MESSAGE_SERVICE=http://my.test.local:8089
+#      - PORTAL_HOST=http://my.test.local:8092
+#      - STRAPI_SERVICE=http://192.168.0.142:82
+#      - PROBATION_TICK=6 * * * * *cd cdcdcccc
+#      - PAYFEE_CHECK_TICK=6 6 08,16 * * *
+#      - BILL_TICK=6 8 8 * * *
+#      - LANGUAGE=zh-CN
+
+#  pay:
+#   image: harbor-dev.r2ai.com.cn/next-test/pay-service:latest
+#   ports:
+#     - 8091:8080
+#   environment:
+#     - STRAPI_SERVICE=http://localhost:82
+#     - REDIS_HOST=192.168.0.142
+
+
+
+volumes:
+  db-data:
+    driver: local
+  mq-data1:
+    driver: local
+  es-data:
+    driver: local
+  mongo-data:
+    driver: local
+  minio-data:
+    driver: local
