@@ -2,8 +2,9 @@ const Sequelize = require('sequelize');
 
 const dbConfig = {
     database: 'users',      // 数据库名
-    username: 'postgres',   // 用户名
-    password: '123456',     // 本地数据库密码
+    username: 'admins',   // 用户名
+    password: 'admins',     // 本地数据库密码
+    port:'5444',
     host: 'localhost',      // 数据库服务器IP
     dialect: 'postgres'     // 数据库类型
 }
@@ -14,6 +15,7 @@ const sequelize = new Sequelize(
     dbConfig.password,
     {
         host: dbConfig.host,
+        port: dbConfig.port,
         dialect: dbConfig.dialect, //数据库类型(这里使用postgres)
         // 设置时区
         timezon: '+08:00',
